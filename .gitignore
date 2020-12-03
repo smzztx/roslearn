@@ -1,0 +1,17 @@
+#ignore catkin_make files#
+#.catkin_workspace
+#src/CMakeLists.txt
+#ignore generated files#
+#/build/
+#/devel/
+#ignore RoboWare Studio files#
+#/.vscode/
+#.ycm_extra_conf.py
+#/devel_isolated/
+#/el/
+#/el_isolated/
+
+#.ycm_extra_conf.py
+#.ycm_extra_conf.pyc
+
+

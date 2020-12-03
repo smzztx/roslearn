@@ -1,0 +1,15 @@
+<launch>
+
+    <arg name="urdf" value="false" />
+    <arg name="talker" value="false" />
+    <arg name="robot_type" value="a1" />
+    <node if="$(arg talker)"
+        pkg="beginner_tutorials" type="talker" name="talker_node">
+    </node>
+
+    <!--include if="$(arg urdf)" 
+        file="$(find r2d2_urdf)/launch/model.launch">
+    </include-->
+
+</launch>
+

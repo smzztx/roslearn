@@ -1,0 +1,15 @@
+<launch>
+<!-- This allows you to see the amy_m1 model without starting it up.by tangxiang.  -->
+    <!-- URDF model -->
+    <arg name="model" />
+    <arg name="gui" default="False" />
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find r2d2_urdf)/urdf/r2d2.urdf.xacro'" />
+
+    <!-- The robot_state_publisher publishes the joints, otherwise your model is a pile white shapes all originating from 0, 0, 0 :) -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+ 
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+    <!-- Launch rviz with our favorite config file -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find r2d2_urdf)/rviz/model.rviz" />
+</launch>

@@ -1,0 +1,21 @@
+digraph G {
+"base_link" -> "left_leg"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"base_link" -> "right_leg"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"base_link" -> "gripper_pole"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"base_link" -> "head"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"left_base" -> "left_back_wheel"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"left_leg" -> "left_base"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"left_base" -> "left_front_wheel"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"gripper_pole" -> "left_gripper"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"left_gripper" -> "left_tip"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"right_base" -> "right_back_wheel"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"right_leg" -> "right_base"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"right_base" -> "right_front_wheel"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"gripper_pole" -> "right_gripper"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"right_gripper" -> "right_tip"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+"head" -> "box"[label="Broadcaster: /robot_state_publisher\nAverage rate: 50.227 Hz\nMost recent transform: 1506348527.575 ( -0.484 sec old)\nBuffer length: 4.977 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1506348527.091"[ shape=plaintext ] ;
+ }->"base_link";
+}

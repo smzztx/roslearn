@@ -1,0 +1,10 @@
+<class_libraries>
+  <library path="lib/libincrement">
+    <class name="IncrementFilterInt" type="filters::IncrementFilter<int>"
+            base_class_type="filters::FilterBase<int>">
+      <description>
+        This is a increment filter which works on a stream of ints.
+      </description>
+    </class>
+  </library>
+</class_libraries>
