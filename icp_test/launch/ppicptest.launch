@@ -1,0 +1,10 @@
+<launch>
+
+  <node pkg="icp_test" name="ppicp_test_node" type="ppicp_test_node" output="screen">
+    <param name="file_path" type="string" value="/home/txcom-ubuntu64/" />
+    <param name="bagname" type="string" value="2020-10-17-00-33-43" />
+    <param name="laser_topic" type="string" value="/scan" />
+  </node>
+   
+
+</launch>
