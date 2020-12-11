@@ -1,9 +1,13 @@
 #include <iostream>
 #include <pcl/registration/icp.h>
 #include <pcl/point_types.h>
+#include <fstream>
+#include <string>
 
 #include <ros/ros.h>
-#include <sensor_msgs/LaserScan>
+#include <sensor_msgs/LaserScan.h>
+#include <rosbag/bag.h>
+#include <rosbag/view.h>
 
 void readDataFromBag(const std::string &bag_name, const std::string &laser_topic_name, std::vector<sensor_msgs::LaserScan> &laser_data)
 {
@@ -42,54 +46,39 @@ void readDataFromBag(const std::string &bag_name, const std::string &laser_topic
     return;
 }
 
-void get_measurement_error(const std::vector<sensor_msgs::LaserScan> &laser_data, std::ofstream &fout_, double start_angle_, double end_angle_)
+void scan_match(const std::vector<sensor_msgs::LaserScan> &laser_data, std::ofstream &fout_)
 {
     bool first_data_flag = true;
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_source, cloud_target;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_source(new pcl::PointCloud<pcl::PointXYZ>()), cloud_target(new pcl::PointCloud<pcl::PointXYZ>());
 
     for(auto const &scan_in : laser_data)
     {
-        if(first_data_flag)
+        fout_ << scan_in.header.stamp << std::endl;
         {
-            // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_source (new pcl::PointCloud<pcl::PointXYZ>());
-            cloud_source->clear();
-            pcl::PointXYZ newPoint;
-            newPoint.z = 0.0;
-            double newPointAngle;
-
-            int beamNum = scan_in->ranges.size();
-            for (int i = 0; i < beamNum; i++)
-            {
-                if(std::isnormal(scan_in->ranges[i]))
-                {
-                    newPointAngle = scan_in->angle_min + scan_in->angle_increment * i;
-                    newPoint.x = scan_in->ranges[i] * cos(newPointAngle);
-                    newPoint.y = scan_in->ranges[i] * sin(newPointAngle);
-                    cloud_source->push_back(newPoint);
-                }
-            }
-            cloud_target = cloud_source;
-        }else
-        {
-            cloud_source = cloud_target;
+            std::swap(cloud_source, cloud_target);
             cloud_target->clear();
             pcl::PointXYZ newPoint;
             newPoint.z = 0.0;
             double newPointAngle;
 
-            int beamNum = scan_in->ranges.size();
+            int beamNum = scan_in.ranges.size();
             for (int i = 0; i < beamNum; i++)
             {
-                if(std::isnormal(scan_in->ranges[i]))
+                if(std::isnormal(scan_in.ranges[i]))
                 {
-                    newPointAngle = scan_in->angle_min + scan_in->angle_increment * i;
-                    newPoint.x = scan_in->ranges[i] * cos(newPointAngle);
-                    newPoint.y = scan_in->ranges[i] * sin(newPointAngle);
+                    newPointAngle = scan_in.angle_min + scan_in.angle_increment * i;
+                    newPoint.x = scan_in.ranges[i] * cos(newPointAngle);
+                    newPoint.y = scan_in.ranges[i] * sin(newPointAngle);
                     cloud_target->push_back(newPoint);
                 }
             }
+            if(first_data_flag)
+            {
+                first_data_flag = false;
+                continue;
+            }
         }
-        
+
         pcl::PointCloud<pcl::PointXYZ> cloud_source_registered;
         pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
         // Set the input source and target
@@ -101,16 +90,30 @@ void get_measurement_error(const std::vector<sensor_msgs::LaserScan> &laser_data
         // Set the maximum number of iterations (criterion 1)
         icp.setMaximumIterations (50);
         // Set the transformation epsilon (criterion 2)
-        icp.setTransformationEpsilon (1e-8);
+        // icp.setTransformationEpsilon (1e-8);
         // Set the euclidean distance difference epsilon (criterion 3)
-        icp.setEuclideanFitnessEpsilon (1);
+        // icp.setEuclideanFitnessEpsilon (1);
         
         // Perform the alignment
         icp.align (cloud_source_registered);
+        fout_ << "cloud_source_registered: \n" << cloud_source_registered << std::endl;
         
         // Obtain the transformation that aligned cloud_source to cloud_source_registered
         Eigen::Matrix4f transformation = icp.getFinalTransformation ();
-        
+        fout_ << "transformation: \n" << transformation << std::endl;
+        fout_ << std::endl;
+        static Eigen::Matrix4f final_laser_odom = Eigen::Matrix4f::Identity();
+        final_laser_odom = transformation * final_laser_odom;
+        fout_ << "final_laser_odom: \n" << final_laser_odom << std::endl;
+        fout_ << std::endl;
+        if (icp.hasConverged ())
+        {
+            fout_ << "\nICP has converged, score is " << icp.getFitnessScore () << std::endl;
+        }
+        else
+        {
+            PCL_ERROR ("\nICP has not converged.\n");
+        }
     }
 }
 
@@ -128,12 +131,13 @@ int main(int argc, char** argv)
     ros::param::get("~laser_topic", laser_topic);
 
     std::string bagfile = file_path + bagname + ".bag";
-    std::string raw_data_file = file_path + bagname + "raw_data.log";
+    std::string laser_odom_file = file_path + bagname + "laser_odom.log";
     std::vector<sensor_msgs::LaserScan> laser_data(0);
-    std::ofstream fout(raw_data_file);
+    std::ofstream fout(laser_odom_file);
 
-    readDataFromBag(bagfile, laser_topic, laser_data);
-    get_measurement_error(laser_data, fout, start_angle, end_angle);
+    // readDataFromBag(bagfile, laser_topic, laser_data);
+    readDataFromBag("/home/txcom-ubuntu64/2020-12-10-11-21-37.bag", "/scan", laser_data);
+    scan_match(laser_data, fout);
 
     fout.close();
 

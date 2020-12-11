@@ -2,9 +2,9 @@
 
   <node pkg="icp_test" name="ppicp_test_node" type="ppicp_test_node" output="screen">
     <param name="file_path" type="string" value="/home/txcom-ubuntu64/" />
-    <param name="bagname" type="string" value="2020-10-17-00-33-43" />
+    <param name="bagname" type="string" value="2020-12-10-11-21-37" />
     <param name="laser_topic" type="string" value="/scan" />
   </node>
    
-
+  <node pkg="tf" type="static_transform_publisher" name="sick_laser_link_broadcaster" args="0 0 0 0 0 0 1 base_link sick_laser_link 100" />
 </launch>

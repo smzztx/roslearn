@@ -2,12 +2,18 @@ cmake_minimum_required(VERSION 2.8.3)
 project(icp_test)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
+set(CMAKE_BUILD_TYPE "Release")
+# set(CMAKE_BUILD_TYPE "Debug")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+## is used, also find other catkin packages COMPONENTS
+find_package(catkin REQUIRED
+  roscpp
+  sensor_msgs
+  rosbag
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -104,7 +110,7 @@ add_definitions(${PCL_DEFINITIONS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES icp_test
-#  CATKIN_DEPENDS other_catkin_pkg
+ CATKIN_DEPENDS roscpp sensor_msgs rosbag
 #  DEPENDS system_lib
 )
 
@@ -150,6 +156,12 @@ target_link_libraries(ppicp_test_node
   ${PCL_LIBRARIES}
 )
 
+add_executable(interactive_icp_node src/interactive_icp.cpp)
+add_dependencies(interactive_icp_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(interactive_icp_node
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
 #############
 ## Install ##
 #############
