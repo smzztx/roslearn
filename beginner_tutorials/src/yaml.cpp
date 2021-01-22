@@ -5,7 +5,7 @@
 
 int main()
 {
-    YAML::Node node;  
+    YAML::Node node;
     assert(node.IsNull());  //初始化的节点是Null类型
     node["key"] = "value";  //当你给它赋值键值对，它转变为Map类型
     //node.force_insert("key", "value");//这个操作和上面等价，但是它不会检查是否存在"key"键，不推荐使用

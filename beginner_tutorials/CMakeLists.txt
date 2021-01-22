@@ -37,6 +37,7 @@ pkg_check_modules(YAMLCPP yaml-cpp REQUIRED)
 if(YAMLCPP_VERSION VERSION_GREATER "0.5.0")
     add_definitions(-DHAVE_YAMLCPP_GT_0_5_0)
 endif()
+MESSAGE (STATUS   "YAMLCPP_VERSION:      ${YAMLCPP_VERSION}")
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

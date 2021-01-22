@@ -1,44 +1,19 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(icp_test)
+project(curve_fitting)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
-set(CMAKE_BUILD_TYPE "Release")
-# set(CMAKE_BUILD_TYPE "Debug")
+# add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages COMPONENTS
-find_package(catkin REQUIRED
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
   roscpp
-  sensor_msgs
-  rosbag
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-find_package(PCL REQUIRED)
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS})
-add_definitions(${PCL_DEFINITIONS})
 
-# Require we have pkgconfig installed
-find_package(PkgConfig REQUIRED)
-# Tell pkgconfig to look for CSM
-pkg_check_modules(CSM REQUIRED csm)
-IF(${CSM_FOUND})
-MESSAGE("CSM_LIBRARY_DIRS: ${CSM_LIBRARY_DIRS}")
-MESSAGE("CSM_LIBRARIES: ${CSM_LIBRARIES}")
-MESSAGE("CSM_INCLUDE_DIRS: ${CSM_INCLUDE_DIRS}")
-INCLUDE_DIRECTORIES(${CSM_INCLUDE_DIRS})#important!
-LINK_DIRECTORIES(${CSM_LIBRARY_DIRS})
-#important!
-ELSE(${CSM_FOUND})
-MESSAGE(FATAL_ERROR"CSMnotfound.Checkthattheenvironment\
-variablePKG_CONFIG_PATHincludesthepathcontainingthefile’csm.pc’.")
-ENDIF(${CSM_FOUND})
-# add_executable(myprogrammyprogram.c)
-# target_link_libraries(myprogram ${CSM_LIBRARIES})#important!
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -127,8 +102,8 @@ ENDIF(${CSM_FOUND})
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES icp_test
- CATKIN_DEPENDS roscpp sensor_msgs rosbag
+#  LIBRARIES curve_fitting
+#  CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
 )
 
@@ -140,12 +115,12 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/icp_test.cpp
+#   src/${PROJECT_NAME}/curve_fitting.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -153,34 +128,26 @@ include_directories(
 ## either from message generation or dynamic reconfigure
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-# Declare a C++ executable
-# With catkin_make all packages are built within a single CMake context
-# The recommended prefix ensures that target names across packages don't collide
-add_executable(icp_test_node src/icp_test.cpp)
+## Declare a C++ executable
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/curve_fitting_node.cpp)
 
-# # Rename C++ executable without prefix
-# # The above recommended prefix causes long target names, the following renames the
-# # target back to the shorter version for ease of user use
-# # e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+## Rename C++ executable without prefix
+## The above recommended prefix causes long target names, the following renames the
+## target back to the shorter version for ease of user use
+## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
 # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
-# Add cmake target dependencies of the executable
-# same as for the library above
-add_dependencies(icp_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-# Specify libraries to link a library or executable target against
-target_link_libraries(icp_test_node
-  ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
-  ${CSM_LIBRARIES}
-)
+## Specify libraries to link a library or executable target against
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
 
-add_executable(interactive_icp_node src/interactive_icp.cpp)
-add_dependencies(interactive_icp_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(interactive_icp_node
-  ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
-)
 #############
 ## Install ##
 #############
@@ -221,7 +188,7 @@ target_link_libraries(interactive_icp_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_icp_test.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_curve_fitting.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
