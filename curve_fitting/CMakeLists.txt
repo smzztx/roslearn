@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Ceres REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -122,6 +123,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${CERES_INCLUDE_DIRS}
   ${OpenCV_DIRS}
+  ${G2O_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -154,6 +156,14 @@ target_link_libraries(ceres_curve_fitting_node
   ${catkin_LIBRARIES}
   ${CERES_LIBRARIES}
   ${OpenCV_LIBS}
+)
+
+add_executable(g2o_curve_fitting_node src/g2o_curve_fitting.cpp)
+add_dependencies(g2o_curve_fitting_node g2o_curve_fitting_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(g2o_curve_fitting_node
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
+  g2o_core g2o_stuff
 )
 
 #############
