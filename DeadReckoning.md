@@ -22,7 +22,7 @@ sin{\alpha}cos\Delta\alpha+cos{\alpha}sin\Delta\alpha & -sin{\alpha}sin\Delta\al
 0 & 0 & 0 & 1 \\
 \end{bmatrix} \\
 &=\begin{bmatrix}
-cos(\alpha+\Delta\alpha) & -sin(\alpha+Delta\alpha) & 0 & {\Delta}xcos{\alpha}-{\Delta}ysin\alpha+x \\
+cos(\alpha+\Delta\alpha) & -sin(\alpha+\Delta\alpha) & 0 & {\Delta}xcos{\alpha}-{\Delta}ysin\alpha+x \\
 sin(\alpha+Delta\alpha) & cos(\alpha+\Delta\alpha) & 0 & {\Delta}xsin{\alpha}+{\Delta}ycos\alpha+y \\
 0 & 0 & 1 & 0 \\
 0 & 0 & 0 & 1 \\

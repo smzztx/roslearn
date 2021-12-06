@@ -11,9 +11,9 @@ set(CMAKE_BUILD_TYPE "Release")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
 )
-
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+find_package( G2O REQUIRED )
 find_package(Ceres REQUIRED)
-find_package(OpenCV REQUIRED)
 find_package(OpenCV REQUIRED)
 
 ## System dependencies are found with CMake's conventions
@@ -161,9 +161,11 @@ target_link_libraries(ceres_curve_fitting_node
 add_executable(g2o_curve_fitting_node src/g2o_curve_fitting.cpp)
 add_dependencies(g2o_curve_fitting_node g2o_curve_fitting_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(g2o_curve_fitting_node
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
-  g2o_core g2o_stuff
+ ${catkin_LIBRARIES}
+ ${OpenCV_LIBS}
+ ${G2O_LIBRARIES}
+ -lg2o_core
+ -lg2o_stuff
 )
 
 #############
