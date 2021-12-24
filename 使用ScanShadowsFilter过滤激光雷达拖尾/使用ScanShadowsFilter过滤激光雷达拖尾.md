@@ -36,7 +36,8 @@ scan_filter_chain:
 
 过滤后，如下图所示，存在拖尾现象的数据已被滤除，但是正常数据也被移除了一部分，可以通过调节neighbors大小来减少影响。
 ![过滤后](attachments/使用ScanShadowsFilter过滤激光拖尾_过滤后.png)
-
+  
+---
 ## 参考
 [官方wiki](http://wiki.ros.org/laser_filters#ScanShadowsFilter)  
 [插件源码](https://github.com/ros-perception/laser_filters/blob/ros2/include/laser_filters/scan_shadows_filter.h#L120)

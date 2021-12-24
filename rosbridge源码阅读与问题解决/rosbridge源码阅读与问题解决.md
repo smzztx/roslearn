@@ -494,7 +494,7 @@ manager = SubscriberManager()
 - subscribe.py：实现了一个capability，一个client对应一个Subscribe类的实例，Subscribe类中根据topic的不同又保存了多个Subscription；
 - subscribers.py：SubscriberManager类是rosbridge中，订阅topic总的管理类，SubscriberManager类中根据topic的不同又保存了多个MultiSubscriber，当ros系统中有新消息时，会调用MultiSubscriber类中的回调函数，该回调函数又会调用多个client的回调函数。当数据较大时，多个线程向一个socket发送消息会导致数据交叉。
 
----------
+---
 
 参考：
 
