@@ -125,6 +125,6 @@
 ## 参考
 [官方wiki](http://wiki.ros.org/laser_filters#LaserScanSpeckleFilter)  
 [插件源码](https://github.com/ros-perception/laser_filters/blob/ros2/include/laser_filters/speckle_filter.h#L225)  
-[ros_comm](https://github.com/ros/ros_comm)  
+<!-- [ros_comm](https://github.com/ros/ros_comm)  
 [一文搞懂XML、Json、Protobuf序列化协议](https://blog.csdn.net/Jiangtagong/article/details/119656782)  
-[探索ROS中的XML](https://www.dazhuanlan.com/heraclitus/topics/1235795)
+[探索ROS中的XML](https://www.dazhuanlan.com/heraclitus/topics/1235795) -->
