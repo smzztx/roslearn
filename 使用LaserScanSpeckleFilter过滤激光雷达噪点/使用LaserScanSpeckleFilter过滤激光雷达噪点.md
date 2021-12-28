@@ -121,6 +121,22 @@
     ![](attachments/filtertype1.png)  
     这里还有个问题是如何求 `d` ，代码中注释部分给出了解析法，其实可以用余弦定理或者使用几何法自行证明，已知两边长度及夹角，求第三边长度。（ $c^2=a^2+b^2-2ab\cos{C}$ ）
   
+## 测试结果
+```yaml
+scan_filter_chain:
+- name: speckle_filter
+  type: laser_filters/LaserScanSpeckleFilter
+  params:
+    filter_type: 0
+    max_range: 2.0
+    max_range_difference: 0.1
+    filter_window: 2
+```
+过滤前可以看到有一处随机噪点，如下图所示：
+![](attachments/filter_speckle_before.png)
+过滤后噪点已被移除。
+![](attachments/filter_speckle_after.png)
+  
 ---
 ## 参考
 [官方wiki](http://wiki.ros.org/laser_filters#LaserScanSpeckleFilter)  
