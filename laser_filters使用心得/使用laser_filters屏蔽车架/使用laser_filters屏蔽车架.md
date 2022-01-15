@@ -41,7 +41,7 @@ scan_filter_chain:
 ```
 滤波后四个柱子附近的激光点都被滤除，但是偶尔会有随机噪点产生，如下图所示：  
 ![](attachments/filter_radius_after.png)
-这里的噪点可以使用 `LaserScanSpeckleFilter` 过滤，可以查看我之前的[文章](../使用LaserScanSpeckleFilter过滤激光雷达噪点/使用LaserScanSpeckleFilter过滤激光雷达噪点.md)，更新后的配置参数如下：  
+这里的噪点可以使用 `LaserScanSpeckleFilter` 过滤，具体可以查看我之前的[文章](../使用LaserScanSpeckleFilter过滤激光雷达噪点/使用LaserScanSpeckleFilter过滤激光雷达噪点.md)，更新后的配置参数如下：  
 ```yaml
 scan_filter_chain:
 - name: footprint_filter
